@@ -1,6 +1,6 @@
 package chap2.practice;
 
-public class Pracitce3 {
+public class Practice3 {
     public static void main(String[] args) {
         long var1 = 10000000L;
         System.out.println(var1);
