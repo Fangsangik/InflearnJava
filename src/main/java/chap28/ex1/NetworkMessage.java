@@ -1,0 +1,14 @@
+package chap28.ex1;
+
+//Network 캑체 안에서만 사용
+public class NetworkMessage {
+    private String content;
+
+    public NetworkMessage(String content) {
+        this.content = content;
+    }
+
+    public void print(){
+        System.out.println(content);
+    }
+}
