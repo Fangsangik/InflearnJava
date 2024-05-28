@@ -1,8 +1,6 @@
 package chap31.ex4;
 
 
-
-
 public class NetworkClientV5 implements AutoCloseable{
     private final String address;
     public boolean connectError;
