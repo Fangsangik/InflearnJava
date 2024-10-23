@@ -6,5 +6,4 @@ public interface SimpleList {
     void add(Object e);
 
     Object get(int index);
-
 }
