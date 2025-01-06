@@ -1,0 +1,53 @@
+package chap56.network.tcp.v1;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import static chap56.util.MyLogger.log;
+
+public class ServerV1 {
+    private static final int PORT = 12345;
+
+    public static void main(String[] args) throws IOException {
+        log("Server started");
+        ServerSocket serverSocket = new ServerSocket(PORT); //12345 포트가 떠있음
+        log("Server socket created: " + PORT);
+
+        Socket socket = serverSocket.accept(); // 12345 포트로 들어오면 갖고 socket을 만들어줌
+        log("Client connected: " + socket);
+        DataInputStream input = new DataInputStream(socket.getInputStream());
+        DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+
+        // 클라이언트로부터 메시지 수신 (서버입장에서는 받는 입장)
+        String received = input.readUTF();
+        log("client -> server: " + received);
+
+        // 클라이언트로 부터 문자 송신 (서버입장에서는 보내는 입장)
+        String toSend =  received + "Hello, Client!";
+        output.writeUTF(toSend);
+        log("server -> client: " + toSend);
+
+        // 자원 정리
+        log("연결 종료: " + socket);
+        input.close();
+        output.close();
+        socket.close();
+        serverSocket.close();
+    }
+}
+
+/**
+ * > Task :chap56.network.tcp.v1.ServerV1.main()
+ * 20:52:32.54 [     main] Server started
+ * 20:52:32.54 [     main] Server socket created: 12345
+ * 20:52:40.97 [     main] Client connected: Socket[addr=/127.0.0.1,port=52307,localport=12345] port 52307에 연결 되어 있음
+ * 20:52:40.97 [     main] client -> server: Hello!
+ * 20:52:40.97 [     main] server -> client: Hello! Hello, Client!
+ * 20:52:40.97 [     main] 연결 종료: Socket[addr=/127.0.0.1,port=52307,localport=12345]
+ *
+ *
+ * 서로 통신 하기 위해서는 IP & PORT가 필요하다. 클라이언트가 접근을 할때 남는 Port 하나 할당
+ */
